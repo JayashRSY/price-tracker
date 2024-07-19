@@ -1,6 +1,6 @@
 "use client";
 
-import { setSelectedStock, useAppDispatch } from "@/app/store";
+import { useAppDispatch } from "@/lib/hooks";
 import { useState } from "react";
 
 const StockModal = () => {
@@ -9,7 +9,7 @@ const StockModal = () => {
 
   const handleChangeStock = () => {
     if (stock) {
-      dispatch(setSelectedStock(stock));
+      // dispatch(setSelectedStock(stock));
     }
   };
 

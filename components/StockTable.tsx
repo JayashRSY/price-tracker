@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import axios from "axios";
-import { setData, useAppDispatch, useAppSelector } from "@/app/store";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const fetchRecentData = async (stock: string) => {
   const response = await axios.get(`/api/getRecentData?stock=${stock}`);
@@ -11,15 +11,16 @@ const fetchRecentData = async (stock: string) => {
 
 const StockTable = () => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state: any) => state.stock.data);
-  const selectedStock = useAppSelector(
-    (state: any) => state.stock.selectedStock
-  );
-
+  //   const data = useAppSelector((state: any) => state.stock.data);
+  let data: any = [];
+  //   const selectedStock = useAppSelector(
+  //     (state: any) => state.stock.selectedStock
+  //   );
+  const selectedStock = "";
   useEffect(() => {
     const interval = setInterval(async () => {
       const recentData = await fetchRecentData(selectedStock);
-      dispatch(setData(recentData));
+      //   dispatch(setData(recentData));
     }, 5000);
 
     return () => clearInterval(interval);
