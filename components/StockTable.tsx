@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import StockModal from "@/components/StockModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilteredPrices, setRecentData } from "@/lib/features/dataSlice";
+import {
+  setFilteredPrices,
+  setIsOpen,
+  setRecentData,
+  setSelectedStock,
+} from "@/lib/features/dataSlice";
 
 const fetchRecentData = async () => {
   const response = await axios.get(`/api/getPriceData`);
@@ -14,11 +19,13 @@ const fetchRecentData = async () => {
 const StockTable = () => {
   const dispatch = useDispatch();
   const recentData = useSelector((state: any) => state.dataSlice.recentData);
+  const isOpen = useSelector((state: any) => state.dataSlice.isOpen);
   const filteredPrices = useSelector(
     (state: any) => state.dataSlice.filteredPrices
   );
-  const [selectedStock, setSelectedStock] = useState<any>("bitcoin");
-  const [isOpen, setIsOpen] = useState(false);
+  const selectedStock = useSelector(
+    (state: any) => state.dataSlice.selectedStock
+  );
   useEffect(() => {
     const interval = setInterval(async () => {
       dispatch(setRecentData(await fetchRecentData()));
@@ -27,16 +34,22 @@ const StockTable = () => {
     return () => clearInterval(interval);
   }, [dispatch, selectedStock]);
 
+  const startSync = async () => {
+    const response = await axios.get(`/api/syncPrices`);
+  };
+  useEffect(() => {
+    startSync();
+  }, []);
   const handleOpenModal = () => {
-    setIsOpen(true);
+    dispatch(setIsOpen(true));
   };
 
   const handleCloseModal = () => {
-    setIsOpen(false);
+    dispatch(setIsOpen(false));
   };
 
   const handleSelectStock = (stock: any) => {
-    setSelectedStock(stock);
+    dispatch(setSelectedStock(stock));
   };
 
   useEffect(() => {

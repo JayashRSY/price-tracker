@@ -8,10 +8,9 @@ import { STOCKS } from '@/constants/STOCKS';
 export async function GET() {
     // const cronJob = cron.schedule('* * * * *', fetchAndStoreStockData); // Run every minute (adjust the expression accordingly)
     // cronJob.start();
-    // const interval = setInterval(async () => {
-    //     const recentData = await fetchAndStoreStockData()
-    //     //   dispatch(setData(recentData));
-    // }, 5000);
+    const interval = setInterval(async () => {
+        const recentData = await fetchAndStoreStockData()
+    }, 5000);
     return new Response(null, { status: 200 });
 }
 

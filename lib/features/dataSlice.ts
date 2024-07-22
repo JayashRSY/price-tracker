@@ -5,12 +5,14 @@ interface dataSlice {
     recentData: any;
     filteredPrices: any
     selectedStock: any
+    isOpen: any
 }
 
 const initialState: dataSlice = {
     recentData: [],
     filteredPrices: [],
-    selectedStock: ""
+    selectedStock: "bitcoin",
+    isOpen: false
 };
 
 export const dataSlice = createSlice({
@@ -26,8 +28,11 @@ export const dataSlice = createSlice({
         setSelectedStock: (state, action: PayloadAction<any>) => {
             state.selectedStock = action.payload;
         },
+        setIsOpen: (state, action: PayloadAction<any>) => {
+            state.isOpen = action.payload;
+        },
     },
 });
 
-export const { setRecentData, setFilteredPrices, setSelectedStock } = dataSlice.actions;
+export const { setRecentData, setFilteredPrices, setSelectedStock, setIsOpen } = dataSlice.actions;
 export default dataSlice.reducer;
